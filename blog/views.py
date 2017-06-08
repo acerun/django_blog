@@ -5,10 +5,15 @@ from django.views.generic import ListView, DetailView
 #from comments.forms import CommentForm
 from .models import Post, Category
 
-def index(request):
-    post_list = Post.objects.all()
-    return render(request, 'blog/index.html', context={'post_list': post_list})
+def terminal(request):
+    return render(request, 'blog/terminal.html')
 
+#class TerminalView(ListView):
+#    template_name = 'blog/terminal.html'
+
+#def index(request):
+#    post_list = Post.objects.all()
+#    return render(request, 'blog/index.html', context={'post_list': post_list})
 
 class IndexView(ListView):
     model = Post
