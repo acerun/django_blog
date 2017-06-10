@@ -1,12 +1,10 @@
-import markdown
+import sys, markdown
 
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
 #from comments.forms import CommentForm
-from .models import Post, Category
-
-def terminal(request):
-    return render(request, 'blog/terminal.html')
+#sys.path.append("..")
+from blog.models import Post, Category
 
 #class TerminalView(ListView):
 #    template_name = 'blog/terminal.html'
