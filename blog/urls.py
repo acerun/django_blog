@@ -9,5 +9,6 @@ urlpatterns = [
     url(r'^archives/(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2})/$', views.ArchivesView.as_view(), name='archives'),
     url(r'^category/(?P<pk>[0-9]+)/$', views.CategoryView.as_view(), name='category'),
     url(r'^terminal$', terminal_view.terminal, name='terminal'),
-    url(r'^get_test/$', terminal_view.get_test, name='get-test'),
+    url(r'^terminal/api/execute_cmd/$', terminal_view.execute_cmd, name='execute-cmd'),
+    url(r'^terminal/api/get_client_ip/$', terminal_view.get_client_ip, name='get-client-ip'),
 ]
