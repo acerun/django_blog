@@ -126,29 +126,11 @@ var Terminal = Terminal || function(cmdLineContainer, outputContainer) {
             return val;
             });
         var cmd = args[0].toLowerCase();
+        params = JSON.stringify(args)
         args = args.splice(1); // Remove cmd from arg list.
       }
 
-      // 'about', 'clear', 'work', 'hobbies', 'contact', 'help'
       switch (cmd) {
-        case 'cat':
-          $.getJSON("/get_test/", {'test_value':"it's cat command"},function(ret){{
-              output(ret)
-
-              }})
-          //var url = args.join(' ');
-          //if (!url) {
-          //  output('Usage: ' + cmd + ' http://s.codepen.io/...');
-          //  output('Example: ' + cmd + ' http://s.codepen.io/AndrewBarfield/pen/LEbPJx.js');
-          //  break;
-          //}
-          //$.get( url, function(data) {
-          //  var encodedStr = data.replace(/[\u00A0-\u9999<>\&]/gim, function(i) {
-          //     return '&#'+i.charCodeAt(0)+';';
-          //  });
-          //  output('<pre>' + encodedStr + '</pre>');
-          //});
-          break;
         case 'clear':
           output_.innerHTML = '';
           this.value = '';
@@ -164,101 +146,64 @@ var Terminal = Terminal || function(cmdLineContainer, outputContainer) {
         case 'echo':
           output( args.join(' ') );
           break;
-        case 'help':
-          output('<div class="ls-files">' + CMDS_.join('<br>') + '</div>');
-          break;
         case 'uname':
           output(navigator.appVersion);
           break;
-        case 'whoami':
-          var result = "<img src=\"" + codehelper_ip["Flag"]+ "\"><br><br>";
-          for (var prop in codehelper_ip)
-            result += prop + ": " + codehelper_ip[prop] + "<br>";
-          output(result);
-          break;
-          // CUSTOM COMMANDS
-        case 'about':
-          output('I\'m Nejc Kikelj. A software developer from Slovenia.');
-          break;
-        case 'work':
-          if (args[0] != undefined) {
-            switch (args[0]) {
-              case 'MyGPService' :
-                output("I'm the Chief Of Software Development at a company providing tracking solutions for logistic companys and more. Most of developement is done in PHP, some in Perl and Java.");
-                break;
-              case 'Geocacher.si' :
-                output("I'm the current IT support guy for the site.");
-                break;
-              case 'Rider.si' :
-                output("I was one of the initial crew that created the site. I have since then abandoned it becouse of some personal reasons. Currently it's maintained by other people.");
-                break;
-              default:
-                output(args[0] + ": Unknown project!");
-            }
-          } else {
-            output('Some of my projects include: MyGPService (GPS tracking platform), Geocacher.si (Geocaching comunity website), Rider.si (Comunity site for watter sports), Proksi.si (Simple hardware store), ...');
-            output('For details, use command work with parameter (example: \'work MyGPService\' ).');
-          }
-          break;
-        case 'hobbies':
-          output("My hobbies include wakebording, hiking, dog waking, ...");
-          break;
-        case 'contact':
-          output("You can reach me on my email: nejc@kikelj.com");
-          break;
         default:
           if (cmd) {
-            output(cmd + ': command not found');
+            $.getJSON('{% url 'blog:execute-cmd' %}', {'parameters':params},function(ret){{
+                output(ret)
+                }})
           }
       };
 
       window.scrollTo(0, getDocHeight_());
       this.value = ''; // Clear/setup line for next input.
-      }
-      }
+    }
+  }
 
-      //
-      function formatColumns_(entries) {
-        var maxName = entries[0].name;
-        util.toArray(entries).forEach(function(entry, i) {
-            if (entry.name.length > maxName.length) {
-            maxName = entry.name;
-            }
-            });
+  //
+  function formatColumns_(entries) {
+    var maxName = entries[0].name;
+    util.toArray(entries).forEach(function(entry, i) {
+        if (entry.name.length > maxName.length) {
+        maxName = entry.name;
+        }
+        });
 
-        var height = entries.length <= 3 ?
-          'height: ' + (entries.length * 15) + 'px;' : '';
+    var height = entries.length <= 3 ?
+      'height: ' + (entries.length * 15) + 'px;' : '';
 
-        // 12px monospace font yields ~7px screen width.
-        var colWidth = maxName.length * 7;
+    // 12px monospace font yields ~7px screen width.
+    var colWidth = maxName.length * 7;
 
-        return ['<div class="ls-files" style="-webkit-column-width:',
-               colWidth, 'px;', height, '">'];
-      }
+    return ['<div class="ls-files" style="-webkit-column-width:',
+           colWidth, 'px;', height, '">'];
+  }
 
-      //
-      function output(html) {
-        output_.insertAdjacentHTML('beforeEnd', '<p>' + html + '</p>');
-      }
+  //
+  function output(html) {
+    output_.insertAdjacentHTML('beforeEnd', '<p>' + html + '</p>');
+  }
 
-      // Cross-browser impl to get document's height.
-      function getDocHeight_() {
-        var d = document;
-        return Math.max(
-            Math.max(d.body.scrollHeight, d.documentElement.scrollHeight),
-            Math.max(d.body.offsetHeight, d.documentElement.offsetHeight),
-            Math.max(d.body.clientHeight, d.documentElement.clientHeight)
-            );
-      }
+  // Cross-browser impl to get document's height.
+  function getDocHeight_() {
+    var d = document;
+    return Math.max(
+        Math.max(d.body.scrollHeight, d.documentElement.scrollHeight),
+        Math.max(d.body.offsetHeight, d.documentElement.offsetHeight),
+        Math.max(d.body.clientHeight, d.documentElement.clientHeight)
+        );
+  }
 
-      //
-      return {
+  //
+  return {
 init: function() {
-        output('<h2 style="letter-spacing: 4px">Kikelj.Com</h2><p>' + new Date() + '</p><p>Enter "help" for more information.</p>');
+        output('<h2 style="letter-spacing: 4px">WpaCli.Com</h2><p>' + new Date() + '</p><p>Enter "help" for more information.</p>');
       },
 output: output
-      }
-    };
+  }
+};
 
 </script>
 </head>
