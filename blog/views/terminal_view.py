@@ -2,18 +2,27 @@ import json
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404
 
+def cmd_help(paramts):
+    jsCmds = ['clear','clock','date','uname','whoami']
+    djCmds = list(commands.keys())
+    allCmds = jsCmds + djCmds
+    allCmds.sort()
+    return ('<div class="ls-files">' + '<br>'.join(allCmds) + '</div>')
+
+def cmd_whoareyou(params):
+    return ('I\'m Run. A software developer from China:)<br>'
+            '<img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1350262701,1461542550&fm=26&gp=0.jpg"></img>')
+
 def cmd_contact(params):
     return "You can reach me on email: 710222122@qq.com"
 
 def cmd_not_found(params):
     return params[0]+': command not found'
 
-def cmd_nothing(params):
-    return "Error command"
-
 commands = {
+    'help': cmd_help,
+    'whoareyou':cmd_whoareyou,
     'contact': cmd_contact,
-    'Nothing': cmd_nothing
     }
 
 def terminal(request):
@@ -23,6 +32,7 @@ def execute_cmd(request):
     value = request.GET.get('parameters')
     params = json.loads(value)
     cmd = params[0]
+#    ret = commands.get(cmd, 'Nothing')(params)
     try:
         ret = commands.get(cmd, 'Nothing')(params)
     except:
