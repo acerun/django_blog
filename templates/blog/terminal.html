@@ -207,7 +207,7 @@ var Terminal = Terminal || function(cmdLineContainer, outputContainer) {
   //
   return {
 init: function() {
-        output('<h2 style="letter-spacing: 4px">WpaCli.Com</h2><p>' + new Date() + '</p><p>Enter "help" for more information.</p>');
+        output(new Date() + '</p><p>Enter "help" for more information.</p>');
       },
 output: output
   }
@@ -218,6 +218,14 @@ output: output
 
 <body>
 <div id="container">
+  <div style="white-space:pre;font-family:monospace" id="result-preview-wrap" class="preview-banner" style="font-size: 15px; ">
+__        __            ____ _ _        ____                
+\ \      / / __   __ _ / ___| (_)      / ___|___  _ __ ___  
+ \ \ /\ / / '_ \ / _` | |   | | |     | |   / _ \| '_ ` _ \ 
+  \ V  V /| |_) | (_| | |___| | |  _  | |__| (_) | | | | | |
+   \_/\_/ | .__/ \__,_|\____|_|_| (_)  \____\___/|_| |_| |_|
+          |_|   
+  </div>
   <output><p></p></output>
   <div id="input-line" class="input-line">
     <div class="prompt"></div><div><input class="cmdline" autofocus=""></div>
