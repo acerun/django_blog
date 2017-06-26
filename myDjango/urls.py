@@ -19,4 +19,6 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'', include('blog.urls')),
+    url(r'^robots\.txt$', lambda r: HttpResponse('User-agent: *\nDisallow /', content_type='txt/plain')),
+    url(r'^search', include('haystack.urls')),
 ]
