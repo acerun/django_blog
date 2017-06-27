@@ -1,5 +1,15 @@
 var searchvisible = 0;
 
+$("#menubar").headroom({
+  "tolerance": 5,
+  "offset": 205,
+  "classes": {
+    "initial": "animated",
+    "pinned": "slideUp",
+    "unpinned": "slideDown"
+  }
+});
+
 $("#search-menu").click(function(e){ 
     //This stops the page scrolling to the top on a # link.
     e.preventDefault();
