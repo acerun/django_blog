@@ -17,7 +17,7 @@ def cmd_contact(params):
     return "You can reach me on email: 710222122@qq.com"
 
 def cmd_not_found(params):
-    return params[0]+': command not found'
+    return f'{params[0]}: command not found'
 
 commands = {
     'help': cmd_help,

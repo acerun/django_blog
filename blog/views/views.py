@@ -106,7 +106,7 @@ class IndexView(ListView):
             # 此时只要获取当前页左边的连续页码号。
             # 比如分页页码列表是 [1, 2, 3, 4]，那么获取的就是 left = [2, 3]
             # 这里只获取了当前页码后连续两个页码，你可以更改这个数字以获取更多页码。
-            left = page_range[(page_number - 3) if (page_number - 3) > 0 else 0:page_number - 1]
+            left = page_range[page_number - 3 if page_number > 3 else 0:page_number - 1]
 
             # 如果最左边的页码号比第 2 页页码号还大，
             # 说明最左边的页码号和第 1 页的页码号之间还有其它页码，因此需要显示省略号，通过 left_has_more 来指示。
@@ -120,7 +120,7 @@ class IndexView(ListView):
         else:
             # 用户请求的既不是最后一页，也不是第 1 页，则需要获取当前页左右两边的连续页码号，
             # 这里只获取了当前页码前后连续两个页码，你可以更改这个数字以获取更多页码。
-            left = page_range[(page_number - 3) if (page_number - 3) > 0 else 0:page_number - 1]
+            left = page_range[page_number - 3 if page_number > 3 else 0:page_number - 1]
             right = page_range[page_number:page_number + 2]
 
             # 是否需要显示最后一页和最后一页前的省略号
@@ -135,7 +135,7 @@ class IndexView(ListView):
             if left[0] > 1:
                 first = True
 
-        data = {
+        return {
             'left': left,
             'right': right,
             'left_has_more': left_has_more,
@@ -143,8 +143,6 @@ class IndexView(ListView):
             'first': first,
             'last': last,
         }
-
-        return data
 
 
 # 记得在顶部导入 DetailView
